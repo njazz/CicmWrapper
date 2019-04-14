@@ -165,8 +165,10 @@ void eobj_attr_getvalueof(void *x, t_symbol *s, int *argc, t_atom **argv);
  * \param x     The edspobj pointer
  * \param nins  The number of signal inputs.
  * \param nouts The number of signal outputs
+ * \param inlets Write created inlets to given pointer, if NULL given - no write
+ * \param outlets Write created outlets to given pointer, if NULL given - no write
  */
-void eobj_dspsetup(void *x, long nins, long nouts);
+void eobj_dspsetup(void *x, long nins, long nouts, t_eproxy** inlets, t_outlet** outlets);
 
 /*!
  * \fn void eobj_dspflags(void *x, long flags)

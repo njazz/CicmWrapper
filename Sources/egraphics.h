@@ -13,6 +13,8 @@
 
 #include "ecommon.h"
 
+#include <vector>
+
 /*! @addtogroup groupgraphics The Graphics Part
  * @brief The t_elayer part.
  * @details This part refers to the methods and structures used to paint.
@@ -25,7 +27,23 @@
  * \param g     The t_elayer pointer.
  * \param width The line width in pixel.
  */
-void egraphics_set_line_width(t_elayer *g, float width);
+void egraphics_set_line_width(t_elayer* g, float width);
+
+/*!
+ * \fn          void egraphics_set_line_capstyle(t_elayer *g, t_capstyle style)
+ * \brief       Sets the line capstyle that will be used by the t_elayer.
+ * \param g     The t_elayer pointer.
+ * \param style The t_capstyle value.
+ */
+void egraphics_set_line_capstyle(t_elayer* g, t_capstyle style);
+
+/*!
+ * \fn          void egraphics_set_line_dashstyle(t_elayer *g, t_dashstyle style)
+ * \brief       Sets the line dashstyle that will be used by the t_elayer.
+ * \param g     The t_elayer pointer.
+ * \param style The t_dashstyle value.
+ */
+void egraphics_set_line_dashstyle(t_elayer* g, t_dashstyle style);
 
 /*!
  * \fn          void egraphics_set_color_rgba(t_elayer *g, const t_rgba *rgba)
@@ -33,7 +51,7 @@ void egraphics_set_line_width(t_elayer *g, float width);
  * \param g     The t_elayer pointer.
  * \param rgba  The t_rgba color.
  */
-void egraphics_set_color_rgba(t_elayer *g, const t_rgba *rgba);
+void egraphics_set_color_rgba(t_elayer* g, const t_rgba* rgba);
 
 /*!
  * \fn          void egraphics_set_color_rgb(t_elayer *g, const t_rgb *rgb)
@@ -41,15 +59,7 @@ void egraphics_set_color_rgba(t_elayer *g, const t_rgba *rgba);
  * \param g     The t_elayer pointer.
  * \param rgb   The t_rgb color.
  */
-void egraphics_set_color_rgb(t_elayer *g, const t_rgb *rgb);
-
-/*!
- * \fn          void egraphics_set_color_hex(t_elayer *g, t_symbol *hex)
- * \brief       Sets the color in hexadecimal that will be used by the t_elayer.
- * \param g     The t_elayer pointer.
- * \param hex   The hexadecimal color.
- */
-void egraphics_set_color_hex(t_elayer *g, t_symbol *hex);
+void egraphics_set_color_rgb(t_elayer* g, const t_rgb* rgb);
 
 /*!
  * \fn          void egraphics_set_color_hsla(t_elayer *g, const t_hsla *hsla)
@@ -57,7 +67,7 @@ void egraphics_set_color_hex(t_elayer *g, t_symbol *hex);
  * \param g     The t_elayer pointer.
  * \param hsla  The hsla color.
  */
-void egraphics_set_color_hsla(t_elayer *g, const t_hsla *hsla);
+void egraphics_set_color_hsla(t_elayer* g, const t_hsla* hsla);
 
 /*!
  * \fn          void egraphics_set_color_hsl(t_elayer *g, const t_hsl *hsl)
@@ -65,7 +75,15 @@ void egraphics_set_color_hsla(t_elayer *g, const t_hsla *hsla);
  * \param g     The t_elayer pointer.
  * \param hsl   The hsla color.
  */
-void egraphics_set_color_hsl(t_elayer *g, const t_hsl *hsl);
+void egraphics_set_color_hsl(t_elayer* g, const t_hsl* hsl);
+
+/*!
+ * \fn          void egraphics_set_color_hex(t_elayer *g, uint32_t c)
+ * \brief       Sets the color in hex that will be used by the t_elayer.
+ * \param g     The t_elayer pointer.
+ * \param hex   The hex color.
+ */
+void egraphics_set_color_hex(t_elayer* g, uint32_t c);
 
 /*!
  * \fn          void egraphics_matrix_init(t_matrix *x, float xx, float yx, float xy, float yy, float x0, float y0)
@@ -78,7 +96,7 @@ void egraphics_set_color_hsl(t_elayer *g, const t_hsl *hsl);
  * \param x0    The abscissa offset.
  * \param y0    The ordiante offset.
  */
-void egraphics_matrix_init(t_matrix *x, float xx, float yx, float xy, float yy, float x0, float y0);
+void egraphics_matrix_init(t_matrix* x, float xx, float yx, float xy, float yy, float x0, float y0);
 
 /*!
  * \fn          void egraphics_set_matrix(t_elayer *g, const t_matrix *matrix)
@@ -86,7 +104,7 @@ void egraphics_matrix_init(t_matrix *x, float xx, float yx, float xy, float yy, 
  * \param g     The t_elayer pointer.
  * \param matrix The t_matrix pointer.
  */
-void egraphics_set_matrix(t_elayer *g, const t_matrix *matrix);
+void egraphics_set_matrix(t_elayer* g, const t_matrix* matrix);
 
 /*!
  * \fn          void egraphics_rotate(t_elayer *g, float angle)
@@ -94,7 +112,7 @@ void egraphics_set_matrix(t_elayer *g, const t_matrix *matrix);
  * \param g     The t_elayer pointer.
  * \param angle  The offset of rotation in radian.
  */
-void egraphics_rotate(t_elayer *g, float angle);
+void egraphics_rotate(t_elayer* g, float angle);
 
 /*!
  * \fn          void egraphics_move_to(t_elayer *g, float x, float y)
@@ -104,7 +122,7 @@ void egraphics_rotate(t_elayer *g, float angle);
  * \param x     The abscissa of the new path.
  * \param y     The ordiante of the new path.
  */
-void egraphics_move_to(t_elayer *g, const float x, const float y);
+void egraphics_move_to(t_elayer* g, const float x, const float y);
 
 /*!
  * \fn          void egraphics_line_to(t_elayer *g, float x, float y)
@@ -114,7 +132,7 @@ void egraphics_move_to(t_elayer *g, const float x, const float y);
  * \param x     The abscissa of the end point.
  * \param y     The ordiante of the end point.
  */
-void egraphics_line_to(t_elayer *g, const float x, const float y);
+void egraphics_line_to(t_elayer* g, const float x, const float y);
 
 /*!
  * \fn          void egraphics_curve_to(t_elayer *g, float ctrl1x, float ctrl1y, float ctrl2x, float ctrl2y, float endx, float endy)
@@ -128,7 +146,7 @@ void egraphics_line_to(t_elayer *g, const float x, const float y);
  * \param endx     The abscissa of the end point.
  * \param endy     The ordiante of the end point.
  */
-void egraphics_curve_to(t_elayer *g, float ctrl1x, float ctrl1y, float ctrl2x, float ctrl2y, float endx, float endy);
+void egraphics_curve_to(t_elayer* g, float ctrl1x, float ctrl1y, float ctrl2x, float ctrl2y, float endx, float endy);
 
 /*!
  * \fn          void egraphics_arc_to(t_elayer *g, float cx, float cy, float extend)
@@ -139,7 +157,7 @@ void egraphics_curve_to(t_elayer *g, float ctrl1x, float ctrl1y, float ctrl2x, f
  * \param cy     The ordiante of the center of the arc.
  * \param extend The extend angle in radian.
  */
-void egraphics_arc_to(t_elayer *g, float cx, float cy, float extend);
+void egraphics_arc_to(t_elayer* g, float cx, float cy, float extend);
 
 /*!
  * \fn          void egraphics_arc_oval_to(t_elayer *g, float cx, float cy, float radius, float extend)
@@ -151,7 +169,7 @@ void egraphics_arc_to(t_elayer *g, float cx, float cy, float extend);
  * \param radius The second radius of the oval arc.
  * \param extend The extend angle in radian.
  */
-void egraphics_arc_oval_to(t_elayer *g, float cx, float cy, float radius, float extend);
+void egraphics_arc_oval_to(t_elayer* g, float cx, float cy, float radius, float extend);
 
 /*!
  * \fn          void egraphics_line(t_elayer *g, float x0, float y0,  float x1, float y1)
@@ -163,7 +181,7 @@ void egraphics_arc_oval_to(t_elayer *g, float cx, float cy, float radius, float 
  * \param x1     The abscissa of the second point.
  * \param y1     The ordiante of the second point.
  */
-void egraphics_line(t_elayer *g, const float x0, const float y0, const float x1, const float y1);
+void egraphics_line(t_elayer* g, const float x0, const float y0, const float x1, const float y1);
 
 /*!
  * \fn          void egraphics_curve(t_elayer *g, float startx, float starty, float ctrl1x, float ctrl1y, float ctrl2x, float ctrl2y, float endx, float endy)
@@ -179,7 +197,7 @@ void egraphics_line(t_elayer *g, const float x0, const float y0, const float x1,
  * \param endx     The abscissa of the end point.
  * \param endy     The ordiante of the end point.
  */
-void egraphics_curve(t_elayer *g, float startx, float starty, float ctrl1x, float ctrl1y, float ctrl2x, float ctrl2y, float endx, float endy);
+void egraphics_curve(t_elayer* g, float startx, float starty, float ctrl1x, float ctrl1y, float ctrl2x, float ctrl2y, float endx, float endy);
 
 /*!
  * \fn          void egraphics_line_fast(t_elayer *g, float x0, float y0, float x1, float y1)
@@ -191,14 +209,14 @@ void egraphics_curve(t_elayer *g, float startx, float starty, float ctrl1x, floa
  * \param x1     The abscissa of the second point.
  * \param y1     The ordiante of the second point.
  */
-void egraphics_line_fast(t_elayer *g, float x0, float y0, float x1, float y1);
+void egraphics_line_fast(t_elayer* g, float x0, float y0, float x1, float y1);
 
 /*!
  * \fn          void egraphics_close_path(t_elayer *g)
  * \brief       Marks the current path as closed.
  * \param g     The t_elayer pointer.
  */
-void egraphics_close_path(t_elayer *g);
+void egraphics_close_path(t_elayer* g);
 
 /*!
  * \fn          void egraphics_rectangle(t_elayer *g, float x, float y, float width, float height)
@@ -209,19 +227,7 @@ void egraphics_close_path(t_elayer *g);
  * \param width     The width of the rectangle.
  * \param height    The height of the rectangle.
  */
-void egraphics_rectangle(t_elayer *g, float x, float y, float width, float height);
-
-/*!
- * \fn          void egraphics_rectangle_rounded(t_elayer *g, float x, float y, float width, float height, float roundness)
- * \brief       Adds a rounded rectangle in the t_elayer.
- * \param g     The t_elayer pointer.
- * \param x     The abscissa of the rectangle.
- * \param y     The ordiante of the rectangle.
- * \param width     The width of the rectangle.
- * \param height    The height of the rectangle.
- * \param roundness The roundness of the angles in pixel.
- */
-void egraphics_rectangle_rounded(t_elayer *g, float x, float y, float width, float height, float roundness);
+void egraphics_rectangle(t_elayer* g, float x, float y, float width, float height);
 
 /*!
  * \fn          void egraphics_circle(t_elayer *g, float xc, float yc, float radius)
@@ -231,7 +237,7 @@ void egraphics_rectangle_rounded(t_elayer *g, float x, float y, float width, flo
  * \param yc     The ordiante of the center of the circle.
  * \param radius The radius of the circle.
  */
-void egraphics_circle(t_elayer *g, float xc, float yc, float radius);
+void egraphics_circle(t_elayer* g, float xc, float yc, float radius);
 
 /*!
  * \fn          void egraphics_oval(t_elayer *g, float xc, float yc, float radiusx, float radiusy)
@@ -242,7 +248,7 @@ void egraphics_circle(t_elayer *g, float xc, float yc, float radius);
  * \param radiusx The horizontal radius of the circle.
  * \param radiusy The vertical radius of the circle.
  */
-void egraphics_oval(t_elayer *g, float xc, float yc, float radiusx, float radiusy);
+void egraphics_oval(t_elayer* g, float xc, float yc, float radiusx, float radiusy);
 
 /*!
  * \fn          void egraphics_arc(t_elayer *g, float xc, float yc, float radius, float angle1, float angle2)
@@ -254,7 +260,7 @@ void egraphics_oval(t_elayer *g, float xc, float yc, float radiusx, float radius
  * \param angle1 The first angle of the arc in radian.
  * \param angle2 The second angle of the arc in radian.
  */
-void egraphics_arc(t_elayer *g, float xc, float yc, float radius, float angle1, float angle2);
+void egraphics_arc(t_elayer* g, float xc, float yc, float radius, float angle1, float angle2);
 
 /*!
  * \fn          void egraphics_arc_oval(t_elayer *g, float xc, float yc, float radiusx, float radiusy, float angle1, float angle2)
@@ -267,7 +273,12 @@ void egraphics_arc(t_elayer *g, float xc, float yc, float radius, float angle1, 
  * \param angle1 The first angle of the oval arc in radian.
  * \param angle2 The second angle of the oval arc in radian.
  */
-void egraphics_arc_oval(t_elayer *g, float xc, float yc, float radiusx, float radiusy, float angle1, float angle2);
+void egraphics_arc_oval(t_elayer* g, float xc, float yc, float radiusx, float radiusy, float angle1, float angle2);
+
+void egraphics_image(t_elayer* g, float xc, float yc, t_eimage* image);
+void egraphics_poly(t_elayer* g, const std::vector<t_pt>& points);
+void egraphics_raise(t_elayer* over, t_elayer* l);
+
 
 /*!
  * \fn          t_etext* etext_layout_create(void)
@@ -297,7 +308,7 @@ void etext_layout_destroy(t_etext* textlayout);
  * \param justify The justification of the text.
  * \param wrap if the text should be wrap or not.
  */
-void etext_layout_set(t_etext* textlayout, const char* text, t_efont *font,  float x, float y, float width,  float height, etextanchor_flags anchor, etextjustify_flags justify, etextwrap_flags wrap);
+void etext_layout_set(t_etext* textlayout, const char* text, t_efont* font, float x, float y, float width, float height, etextanchor_flags anchor, etextjustify_flags justify, etextwrap_flags wrap);
 
 /*!
  * \fn          void etext_layout_settextcolor(t_etext* textlayout, t_rgba* color)
@@ -330,28 +341,28 @@ void efont_destroy(t_efont* font);
  * \brief       Fills the t_elayer with the current path.
  * \param g     The t_elayer pointer.
  */
-void egraphics_fill(t_elayer *g);
+void egraphics_fill(t_elayer* g);
 
 /*!
  * \fn          void egraphics_fill_preserve(t_elayer *g)
  * \brief       Fills the t_elayer with the current path and preserves the current path.
  * \param g     The t_elayer pointer.
  */
-void egraphics_fill_preserve(t_elayer *g);
+void egraphics_fill_preserve(t_elayer* g);
 
 /*!
  * \fn          void egraphics_stroke(t_elayer *g)
  * \brief       Strokes the t_elayer with the current path.
  * \param g     The t_elayer pointer.
  */
-void egraphics_stroke(t_elayer *g);
+void egraphics_stroke(t_elayer* g);
 
 /*!
  * \fn          void egraphics_stroke_preserve(t_elayer *g)
  * \brief       Strokes the t_elayer with the current path and preserves the current path.
  * \param g     The t_elayer pointer.
  */
-void egraphics_stroke_preserve(t_elayer *g);
+void egraphics_stroke_preserve(t_elayer* g);
 
 /*!
  * \fn          void etext_layout_draw(t_etext* textlayout, t_elayer *g)
@@ -359,7 +370,7 @@ void egraphics_stroke_preserve(t_elayer *g);
  * \param textlayout The t_etext pointer.
  * \param g     The t_elayer pointer.
  */
-void etext_layout_draw(t_etext* textlayout, t_elayer *g);
+void etext_layout_draw(t_etext* textlayout, t_elayer* g);
 
 /*!
  * \fn          void rgba_set(t_rgba *color, float red, float green, float blue, float alpha)
@@ -370,7 +381,7 @@ void etext_layout_draw(t_etext* textlayout, t_elayer *g);
  * \param blue The blue component.
  * \param alpha The alpha component.
  */
-void rgba_set(t_rgba *color, float red, float green, float blue, float alpha);
+void rgba_set(t_rgba* color, float red, float green, float blue, float alpha);
 
 /*!
  * \fn          void rgb_set(t_rgb *color, float red, float green, float blue)
@@ -380,7 +391,7 @@ void rgba_set(t_rgba *color, float red, float green, float blue, float alpha);
  * \param green The green component.
  * \param blue The blue component.
  */
-void rgb_set(t_rgb *color, float red, float green, float blue);
+void rgb_set(t_rgb* color, float red, float green, float blue);
 
 /*!
  * \fn          void hsla_set(t_hsla *color, float hue, float saturation, float luminosity, float alpha)
@@ -391,7 +402,7 @@ void rgb_set(t_rgb *color, float red, float green, float blue);
  * \param lightness The luminosity component.
  * \param alpha The alpha component.
  */
-void hsla_set(t_hsla *color, float hue, float saturation, float lightness, float alpha);
+void hsla_set(t_hsla* color, float hue, float saturation, float lightness, float alpha);
 
 /*!
  * \fn          void hsl_set(t_hsl *color, float hue, float saturation, float luminosity)
@@ -401,7 +412,7 @@ void hsla_set(t_hsla *color, float hue, float saturation, float lightness, float
  * \param saturation The saturation component.
  * \param lightness The luminosity component.
  */
-void hsl_set(t_hsl *color, float hue, float saturation, float lightness);
+void hsl_set(t_hsl* color, float hue, float saturation, float lightness);
 
 /*!
  * \fn          char* rgba_to_hex(t_rgba color)
@@ -412,28 +423,20 @@ void hsl_set(t_hsl *color, float hue, float saturation, float lightness);
 char* rgba_to_hex(t_rgba color);
 
 /*!
- * \fn          char* rgb_to_hex(t_rgb color)
- * \brief       Converts a t_rgb color to an hexadecimal color.
- * \param color The t_rgb color.
+ * \fn          char* rgba_to_hex(t_rgba color)
+ * \brief       Converts a t_rgba color to an hexadecimal color.
+ * \param color The t_rgba color.
  * \return The hexadecimal color.
  */
-char* rgb_to_hex(t_rgb color);
+int rgba_to_hex_int(const t_rgba& color);
 
 /*!
- * \fn          char* hsla_to_hex(t_hsla color)
- * \brief       Converts a t_hsla color to an hexadecimal color.
- * \param color The t_hsla color.
+ * \fn          char* rgba_to_hex(t_rgba color)
+ * \brief       Converts a t_rgba color to an hexadecimal color.
+ * \param color The t_rgba color.
  * \return The hexadecimal color.
  */
-char* hsla_to_hex(t_hsla color);
-
-/*!
- * \fn          char* hsl_to_hex(t_hsl color)
- * \brief       Converts a t_hsl color to an hexadecimal color.
- * \param color The t_hsl color.
- * \return The hexadecimal color.
- */
-char* hsl_to_hex(t_hsl color);
+int rgb_to_hex_int(const t_rgb& color);
 
 /*!
  * \fn          t_hsla rgba_to_hsla(t_rgba color)
@@ -457,7 +460,7 @@ t_hsl rgb_to_hsl(t_rgb color);
  * \param color The hexadecimal color.
  * \return The t_rgba color.
  */
-t_rgba hex_to_rgba(char* color);
+t_rgba hex_to_rgba(const char* color);
 
 /*!
  * \fn          t_rgb hex_to_rgb(char* color)
@@ -465,7 +468,7 @@ t_rgba hex_to_rgba(char* color);
  * \param color The hexadecimal color.
  * \return The t_rgb color.
  */
-t_rgb hex_to_rgb(char* color);
+t_rgb hex_to_rgb(const char* color);
 
 /*!
  * \fn          t_rgba hsla_to_rgba(t_hsla color)
@@ -502,6 +505,13 @@ t_rgba rgba_addContrast(t_rgba color, float contrast);
  * \return The new t_rgb color.
  */
 t_rgb rgb_addContrast(t_rgb color, float contrast);
+
+t_rgba rgba_color_sum(const t_rgba* c1, const t_rgba* c2, float alpha);
+
+t_eimage* eimage_create(const char* data, int width, int height, etextanchor_flags anchor);
+void eimage_destroy(t_eimage* img);
+void eimage_copy(t_eimage* dest, const t_eimage* img1);
+void eimage_set_base64_data(t_eimage* img, const char* base64);
 
 //! @cond
 float pd_clip_min(float aValue, float aMinimum);

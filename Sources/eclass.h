@@ -19,6 +19,8 @@
 
 #include "edefine.h"
 
+#include <stddef.h>
+
 /*! @addtogroup groupclass
  *  @{
  */
@@ -121,6 +123,16 @@ void eclass_attr_setter(t_object* x, t_symbol *s, int argc, t_atom *argv);
  */
 void eclass_attr_getter(t_object* x, t_symbol *s, int* argc, t_atom** argv);
 
+/*!
+ * \fn       void eclass_attr_ceammc_getter(t_object* x, t_symbol *s, int* argc, t_atom** argv)
+ * \brief           The getter method of the attributes.
+ * \param x         The object pointer
+ * \param s         The attribute name
+ * \param argc      The size of the array of atoms
+ * \param argv      The array of atoms that contains the attributes values
+ */
+void eclass_attr_ceammc_getter(t_object* x, t_symbol *s, int argc, t_atom* argv);
+
 //! @endcond
 
 /*!
@@ -214,9 +226,9 @@ void eclass_attr_step(t_eclass* c, const char* attrname, float value);
  * \details         Only GUI can save their attributes. You should prefer to use the MACROS.
  * \param c         The t_eclass pointer
  * \param attrname  The attribute name
- * \param flags     The flags of the attribute (dummy)
+ * \param value     The save or not save
  */
-void eclass_attr_save(t_eclass* c, const char* attrname, long flags);
+void eclass_attr_save(t_eclass* c, const char* attrname, long flags, bool value = true);
 
 /*!
  * \fn          void eclass_attr_paint(t_eclass* c, const char* attrname, long flags)
@@ -237,6 +249,16 @@ void eclass_attr_paint(t_eclass* c, const char* attrname, long flags);
  * \param flags     The flags of the attribute (dummy)
  */
 void eclass_attr_invisible(t_eclass* c, const char* attrname, long flags);
+
+/*!
+ * \fn          void eclass_attr_visible(t_eclass* c, const char* attrname, long flags)
+ * \brief           Sets if the attribute should be displayed in the properties window.
+ * \details         You should prefer to use the MACROS.
+ * \param c         The t_eclass pointer
+ * \param attrname  The attribute name
+ * \param flags     The flags of the attribute (dummy)
+ */
+void eclass_attr_visible(t_eclass* c, const char* attrname, long flags);
 
 /*!
  * \fn          void eclass_attr_accessor(t_eclass* c, const char* attrname, t_err_method getter, t_err_method setter)
@@ -260,8 +282,12 @@ void eclass_attr_accessor(t_eclass* c, const char* attrname, t_err_method getter
  */
 void eclass_attr_itemlist(t_eclass* c, const char* attrname, long flags, const char* list);
 
+void eclass_attr_sort(t_eclass* c);
+
+void eclass_attr_redirect(t_eclass* c, const char* attrname, t_gotfn fn);
+
 //! @cond
-#define calcoffset(x,y) ((long)(&(((x *)0L)->y)))
+#define calcoffset(x,y) ((ptrdiff_t)(&(((x *)0L)->y)))
 //! @endcond
 
 //! Macros that create an int attribute
@@ -324,6 +350,13 @@ eclass_new_attr_typed(c,name, "symbol", calcoffset(struct,size), maxsize, flags,
 //! Macros that create a atom array with a variable size attribute
 #define CLASS_ATTR_ATOM_VARSIZE(c,name,flags,struct, member, size, maxsize) \
 eclass_new_attr_typed(c,name, "atom", calcoffset(struct,size), maxsize, flags, calcoffset(struct,member))
+
+//! CEAMMC
+//! Macros that creates virtual invisible attribute only with getter and setter access
+#define CLASS_ATTR_VIRTUAL(c, name, getter, setter) \
+    eclass_new_attr_typed(c, name, "float", 1, 0, 0, 0); \
+    eclass_attr_invisible(c, name, 0);\
+    eclass_attr_accessor(c, name, (t_err_method)getter, (t_err_method)setter)
 
 //! Macros that define the category of the attributes
 #define CLASS_ATTR_CATEGORY(c,name,flags,categoryname)  eclass_attr_category(c,name,flags,categoryname)
