@@ -87,8 +87,12 @@ extern t_symbol* s_int;
 extern t_symbol* s_long;
 //! The pre-defined double t_symbol*
 extern t_symbol* s_double;
+//! The pre-defined s_pinned t_symbol*
+extern t_symbol* s_pinned;
+//! The pre-defined s_iscicm t_symbol*
+extern t_symbol* s_iscicm;
 
-// quickfix: v0.49 API
+//! @cond
 #if (PD_MINOR_VERSION>=49)
 #include "s_stuff.h"
 #define sys_staticpath STUFF->st_staticpath
@@ -152,7 +156,7 @@ typedef enum etextanchor_flags
     ETEXT_DOWN_LEFT     = 4, /*!< Down anfd left. */
     ETEXT_DOWN_RIGHT    = 5, /*!< Down anfd right. */
     ETEXT_LEFT          = 6, /*!< Left. */
-    ETEXT_RIGHT         = 7, /*!< right. */
+    ETEXT_RIGHT         = 7, /*!< Right. */
     ETEXT_CENTER        = 8  /*!< Center. */
     
 } etextanchor_flags;
@@ -165,7 +169,7 @@ typedef enum etextanchor_flags
 typedef enum etextwrap_flags
 {
     ETEXT_NOWRAP    = 0, /*!< False. */
-    ETEXT_WRAP      = 1 /*!< True. */
+    ETEXT_WRAP      = 1  /*!< True. */
 } etextwrap_flags;
 
 /**
@@ -188,12 +192,8 @@ typedef enum etextjustify_flags
 typedef enum
 {
     E_GOBJ_INVALID           = 0,   /*!< This type is invalid. */
-    E_GOBJ_PATH                 ,   /*!< This is a path. */
-    E_GOBJ_RECT                 ,   /*!< This is a rect. */
-    E_GOBJ_ARC                  ,   /*!< This is an arc. */
-    E_GOBJ_OVAL                 ,   /*!< This is an oval. */
-    E_GOBJ_TEXT                 ,   /*!< This is a text. */
-    E_GOBJ_IMAG                    /*!< This is an image. */
+    E_GOBJ_PATH              = 1,   /*!< This is a path. */
+    E_GOBJ_TEXT              = 2    /*!< This is a text. */
 } egraphics_types;
 
 /**
@@ -204,7 +204,9 @@ typedef enum
 typedef enum
 {
     E_PATH_MOVE    = 0,   /*!< This type is move. */
-    E_PATH_CURVE   = 1    /*!< This type is curve. */
+    E_PATH_LINE    = 1,   /*!< This type is line. */
+    E_PATH_CURVE   = 2,   /*!< This type is curve. */
+    E_PATH_CLOSE   = 3    /*!< This type is close. */
 } epath_types;
 
 /**
@@ -346,6 +348,7 @@ typedef struct t_etext
  * @struct t_egobj
  * @brief The  drawing object.
  * @details It contains the all the informations to be drawn.
+ * @todo should keep the allocated memory
  */
 typedef struct t_egobj
 {
@@ -355,8 +358,7 @@ typedef struct t_egobj
     float           e_width;        /*!< The line width of the graphical object. */
     
 	t_pt*           e_points;       /*!< The points of the graphical object. */
-    long            e_npoints;      /*!< The number of points of the graphical object. */
-    float           e_roundness;    /*!< The roundness of the graphical object. */
+    int             e_npoints;      /*!< The number of points of the graphical object. */
     t_efont         e_font;         /*!< The font of the graphical object. */
     t_symbol*       e_anchor;       /*!< The anchor of the graphical object. */
     t_symbol*       e_justify;      /*!< The justification of the graphical object. */
@@ -714,6 +716,7 @@ typedef struct t_ebox
     t_rect              b_rect;             /*!< The ebox rectangle. */
     t_rect              b_rect_last;        /*!< The ebox previous rectangle. */
     t_efont             b_font;             /*!< The ebox font. */
+    int                 b_pinned;           /*!< If the ebox is pinned to the canvas. */
     int                 b_selected_box;     /*!< The selected state */
     int                 b_selected_item;    /*!< The items selected. */
     int                 b_selected_inlet;   /*!< The inlet selected. */
@@ -758,6 +761,7 @@ typedef struct t_edspbox
     t_rect              b_rect;             /*!< The ebox rectangle. */
     t_rect              b_rect_last;        /*!< The ebox previous rectangle. */
     t_efont             b_font;             /*!< The ebox font. */
+    int                 b_pinned;           /*!< If the ebox is pinned to the canvas. */
     int                 b_selected_box;     /*!< The selected state */
     int                 b_selected_item;    /*!< The items selected. */
     int                 b_selected_inlet;   /*!< The inlet selected. */
@@ -776,7 +780,6 @@ typedef struct t_edspbox
     
     t_edsp d_dsp; /*!< The dsp structure. */
 }t_edspbox;
-
 
 
 #endif
