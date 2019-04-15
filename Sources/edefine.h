@@ -83,6 +83,12 @@ extern t_symbol* s_long;
 extern t_symbol* s_double;
 
 //! @cond
+#if (PD_MINOR_VERSION>=49)
+#include "s_stuff.h"
+#define sys_staticpath STUFF->st_staticpath
+#define sys_searchpath STUFF->st_searchpath
+#else
+//! @cond
 typedef struct _namelist    /* element in a linked list of stored strings */
 {
     struct _namelist *nl_next;  /* next in list */
@@ -91,7 +97,9 @@ typedef struct _namelist    /* element in a linked list of stored strings */
 
 EXTERN t_namelist *sys_staticpath;
 EXTERN t_namelist *sys_searchpath;
+#endif
 EXTERN t_namelist *namelist_append_files(t_namelist *listwas, const char *s);
+
 //! @endcond
 
 /** @} */

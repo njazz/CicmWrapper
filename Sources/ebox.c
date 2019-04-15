@@ -945,8 +945,9 @@ t_pd_err ebox_set_font(t_ebox *x, t_object *attr, int argc, t_atom *argv)
     else
         x->b_font.c_family = gensym("Helvetica");
 
-    x->b_font.c_family = gensym(strtok(x->b_font.c_family->s_name," ',.-"));
-    x->b_font.c_family->s_name[0] = (char)toupper(x->b_font.c_family->s_name[0]);
+    char * _sym = strtok(x->b_font.c_family->s_name," ',.-");
+    _sym[0] = (char)toupper(x->b_font.c_family->s_name[0]);
+    x->b_font.c_family = gensym(_sym);
     return 0;
 }
 
